@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Robot do
   let(:robot) { Robot.new }
 
-  describe '#placed' do
+  describe '#place' do
     context 'with valid placement' do
       it 'will return true' do
         robot.place(0, 0, 'NORTH')
