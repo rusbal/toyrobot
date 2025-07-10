@@ -1,5 +1,5 @@
 class Robot
-  VALID_COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
+  COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
   VALID_POINT = ->(n) { n && n >= 0 && n <= 4 }
 
@@ -47,17 +47,9 @@ class Robot
     state.values.join(',')
   end
 
-  def placed?
-    state.any?
-  end
-
   private
 
   attr_accessor :state
-
-  def initialize
-    save_state({})
-  end
 
   def save_state(new_state)
     @state ||= {}
@@ -76,9 +68,14 @@ class Robot
     direction = direction&.strip
 
     # NO OP
-    return unless VALID_COMMANDS.include?(command)
+    return unless COMMANDS.include?(command)
+    return if command != 'PLACE' && !placed?
 
     send(command.downcase, x, y, direction)
+  end
+
+  def placed?
+    (state || {}).any?
   end
 
   def valid?(kwargs)
