@@ -15,23 +15,11 @@ class Robot
   end
 
   def left
-    index = DIRECTIONS.index(@state[:direction]) - 1
-
-    if index < 0
-      index = 3
-    end
-
-    @state[:direction] = DIRECTIONS[index]
+    change_direction_90_degrees(__method__)
   end
 
   def right
-    index = DIRECTIONS.index(@state[:direction]) + 1
-
-    if index > 4
-      index = 0
-    end
-
-    @state[:direction] = DIRECTIONS[index]
+    change_direction_90_degrees(__method__)
   end
 
   def placed?
@@ -72,6 +60,24 @@ class Robot
 
   def valid_coords?(x, y)
     VALID_POINT.call(x) && VALID_POINT.call(y)
+  end
+
+  def change_direction_90_degrees(direction)
+    if direction == :left
+      change = -1
+    elsif direction == :right
+      change = 1
+    end
+
+    index = DIRECTIONS.index(@state[:direction]) + change
+
+    if index < 0
+      index = 3
+    elsif index > 3
+      index = 0
+    end
+
+    @state[:direction] = DIRECTIONS[index]
   end
 
   DIRECTIONS.each do |direction|
