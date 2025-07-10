@@ -14,6 +14,18 @@ class Robot
     end
   end
 
+  def left
+    if north?
+      @state[:direction] = 'SOUTH'
+    elsif south?
+      @state[:direction] = 'NORTH'
+    elsif east?
+      @state[:direction] = 'WEST'
+    elsif west?
+      @state[:direction] = 'EAST'
+    end
+  end
+
   def placed?
     !@state.empty?
   end

@@ -82,4 +82,38 @@ RSpec.describe Robot do
       end
     end
   end
+
+  describe '#left' do
+    context 'north' do
+      it 'rotates 90 degrees' do
+        robot.place(0, 0, 'NORTH')
+        robot.left
+        expect(robot.report[:direction]).to eq('SOUTH')
+      end
+    end
+
+    context 'south' do
+      it 'rotates 90 degrees' do
+        robot.place(0, 0, 'SOUTH')
+        robot.left
+        expect(robot.report[:direction]).to eq('NORTH')
+      end
+    end
+
+    context 'east' do
+      it 'rotates 90 degrees' do
+        robot.place(0, 0, 'EAST')
+        robot.left
+        expect(robot.report[:direction]).to eq('WEST')
+      end
+    end
+
+    context 'west' do
+      it 'rotates 90 degrees' do
+        robot.place(0, 0, 'WEST')
+        robot.left
+        expect(robot.report[:direction]).to eq('EAST')
+      end
+    end
+  end
 end
