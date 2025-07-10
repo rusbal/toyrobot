@@ -16,9 +16,7 @@ class Robot
   end
 
   def place(*args)
-    if valid?(*args)
-      save_state(x: args[0], y: args[1], direction: args[2])
-    end
+    save_state(x: args[0], y: args[1], direction: args[2])
   end
 
   def left(*)
@@ -42,9 +40,7 @@ class Robot
       new_state[:x] -= 1
     end
 
-    if valid_coords?(new_state[:x], new_state[:y])
-      save_state(new_state)
-    end
+    save_state(new_state)
   end
 
   def report(*)
@@ -69,7 +65,11 @@ class Robot
 
   def save_state(new_state)
     @state ||= {}
-    @state = { **@state, **new_state }
+    new_state = { **@state, **new_state }
+
+    if valid?(new_state)
+      @state = new_state
+    end
   end
 
   def exec_one_command(command_and_args)
@@ -85,8 +85,10 @@ class Robot
     send(command.downcase, x, y, direction)
   end
 
-  def valid?(*args)
-    x, y, direction = *args
+  def valid?(kwargs)
+    x = kwargs[:x]
+    y = kwargs[:y]
+    direction = kwargs[:direction]
 
     return false unless x && y && direction
 
