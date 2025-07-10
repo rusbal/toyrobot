@@ -152,25 +152,37 @@ RSpec.describe Robot do
   end
 
   describe 'given tests on toy robot.md' do
-    let(:commands) { <<~COMMANDS
-        PLACE 0,0, NORTH
-        MOVE
-        REPORT
-      COMMANDS
-    }
+    subject { Robot.call(commands) }
+
     describe 'first test' do
+      let(:commands) { <<~COMMANDS
+          PLACE 0,0, NORTH
+          MOVE
+          REPORT
+        COMMANDS
+      }
+
       it 'returns expected string' do
-        expect(Robot.call(commands)).to eq "0,1, NORTH"
+        expect(subject).to eq "0,1,NORTH"
       end
     end
 
     describe 'second test' do
-      it 'ok' do
+      let(:commands) { <<~COMMANDS
+          PLACE 0,0,NORTH
+          LEFT
+          REPORT
+        COMMANDS
+      }
+
+      it 'returns expected string' do
+        expect(subject).to eq "0,0,WEST"
       end
     end
 
     describe 'third test' do
-      it 'ok' do
+      it 'returns expected string' do
+        expect(subject).to eq "0,1, NORTH"
       end
     end
   end

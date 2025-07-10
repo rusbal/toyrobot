@@ -14,7 +14,7 @@ class Robot
       exec_one_command(command_and_args)
     end.last
 
-    "#{state[:x]},#{state[:y]}, #{state[:direction]}"
+    "#{state[:x]},#{state[:y]},#{state[:direction]}"
   end
 
   def place(*args)
