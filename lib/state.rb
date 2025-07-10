@@ -3,7 +3,7 @@
 # State saves the x and y coordinates, and direction
 class State
   DIRECTIONS = %w[NORTH EAST SOUTH WEST].freeze
-  VALID_POINT = ->(n) { n && n >= 0 && n <= 4 }
+  VALID_POINT = ->(n) { n >= 0 && n <= 4 }
 
   %i[x y direction].each do |attr|
     define_method(attr) do
@@ -17,7 +17,7 @@ class State
     @state ||= {}
     new_state = { **@state, **new_state }
 
-    return unless valid?(new_state)
+    return unless valid?(**new_state)
 
     @state = new_state
   end
@@ -48,18 +48,12 @@ class State
     @state = {}
   end
 
-  def valid?(kwargs)
-    x = kwargs[:x]
-    y = kwargs[:y]
-    direction = kwargs[:direction]
-
+  def valid?(x: nil, y: nil, direction: nil)
     return false unless x && y && direction
 
-    valid_coords?(x, y) && DIRECTIONS.include?(direction)
-  end
-
-  def valid_coords?(x, y)
-    VALID_POINT.call(x) && VALID_POINT.call(y)
+    VALID_POINT.call(x) &&
+      VALID_POINT.call(y) &&
+      DIRECTIONS.include?(direction)
   end
 
   DIRECTIONS.each do |direction|
