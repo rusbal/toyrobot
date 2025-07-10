@@ -1,14 +1,15 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative './lib/robot'
 
-puts "Robot by Raymond Usbal"
+puts 'Robot by Raymond Usbal'
 
 robot = Robot.new
 
 begin
   loop do
-    print "> "  # Show prompt
+    print '> ' # Show prompt
     input = gets&.chomp&.upcase
     break if input.nil? || input == 'QUIT' || input == 'EXIT'
 

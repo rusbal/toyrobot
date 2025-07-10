@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require_relative './state'
 
+# Robot is the main class
 class Robot
-  COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
+  COMMANDS = %w[PLACE LEFT RIGHT MOVE REPORT].freeze
 
   def self.call(commands)
     new.call(commands)
@@ -64,14 +67,18 @@ class Robot
       change = 1
     end
 
+    State::DIRECTIONS[compute_index(change)]
+  end
+
+  def compute_index(change)
     index = State::DIRECTIONS.index(state.direction) + change
 
-    if index < 0
-      index = 3
+    if index.negative?
+      3
     elsif index > 3
-      index = 0
+      0
+    else
+      index
     end
-
-    State::DIRECTIONS[index]
   end
 end

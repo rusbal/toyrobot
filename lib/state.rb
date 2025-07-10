@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+# State saves the x and y coordinates, and direction
 class State
-  DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
+  DIRECTIONS = %w[NORTH EAST SOUTH WEST].freeze
   VALID_POINT = ->(n) { n && n >= 0 && n <= 4 }
 
-  [:x, :y, :direction].each do |attr|
+  %i[x y direction].each do |attr|
     define_method(attr) do
       @state[attr]
     end
@@ -14,9 +17,9 @@ class State
     @state ||= {}
     new_state = { **@state, **new_state }
 
-    if valid?(new_state)
-      @state = new_state
-    end
+    return unless valid?(new_state)
+
+    @state = new_state
   end
 
   def ready?

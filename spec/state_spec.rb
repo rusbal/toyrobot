@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe State do
@@ -41,14 +43,14 @@ RSpec.describe State do
   describe '#formatted_report' do
     context 'no data' do
       it 'returns formatted data' do
-        expect(state.formatted_report).to eq ""
+        expect(state.formatted_report).to eq ''
       end
     end
 
     context 'with data' do
       it 'returns formatted data' do
         state.save(x: 0, y: 4, direction: 'NORTH')
-        expect(state.formatted_report).to eq "0,4,NORTH"
+        expect(state.formatted_report).to eq '0,4,NORTH'
       end
     end
   end
