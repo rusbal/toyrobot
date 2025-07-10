@@ -22,11 +22,11 @@ class Robot
   end
 
   def left(*)
-    change_direction_90_degrees(__method__)
+    save_state(direction: change_direction_90_degrees(__method__))
   end
 
   def right(*)
-    change_direction_90_degrees(__method__)
+    save_state(direction: change_direction_90_degrees(__method__))
   end
 
   def move(*)
@@ -68,7 +68,8 @@ class Robot
   end
 
   def save_state(new_state)
-    @state = new_state
+    @state ||= {}
+    @state = { **@state, **new_state }
   end
 
   def exec_one_command(command_and_args)
@@ -111,7 +112,7 @@ class Robot
       index = 0
     end
 
-    state[:direction] = DIRECTIONS[index]
+    DIRECTIONS[index]
   end
 
   DIRECTIONS.each do |direction|
