@@ -40,4 +40,17 @@ RSpec.describe Robot do
       end
     end
   end
+
+  describe '#move' do
+    context 'valid' do
+      it 'moves one square to the right direction' do
+        robot.place(0, 0, 'NORTH')
+        robot.move
+        expect(robot.report).to eq(x: 0, y: 1, direction: 'NORTH')
+      end
+    end
+
+    context 'invalid' do
+    end
+  end
 end
