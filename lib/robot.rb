@@ -11,7 +11,9 @@ class Robot
   end
 
   def call(commands)
-    success = commands.split("\n").map do |command_and_args|
+    command_list = commands.squeeze(' ').split("\n")
+
+    success = command_list.map do |command_and_args|
       run(command_and_args)
     end.compact.last
 
@@ -47,7 +49,7 @@ class Robot
   attr_accessor :state
 
   def run(command_and_args)
-    command, x, y, direction = command_and_args.squeeze(' ').split(/[ ,]/, 4)
+    command, x, y, direction = command_and_args.split(/[ ,]/, 4)
 
     return if unprocessable_command?(command)
 
