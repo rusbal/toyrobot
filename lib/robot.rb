@@ -1,5 +1,3 @@
-require 'debug'
-
 class Robot
   VALID_COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
