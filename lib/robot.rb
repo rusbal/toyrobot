@@ -43,10 +43,6 @@ class Robot
     state
   end
 
-  def formatted_report
-    state.values.join(',')
-  end
-
   private
 
   attr_accessor :state
@@ -108,6 +104,10 @@ class Robot
     end
 
     DIRECTIONS[index]
+  end
+
+  def formatted_report
+    state.values.join(',')
   end
 
   DIRECTIONS.each do |direction|
