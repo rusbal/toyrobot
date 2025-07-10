@@ -17,7 +17,7 @@ class Robot
 
   def place(*args)
     if valid?(*args)
-      @state = { x: args[0], y: args[1], direction: args[2] }
+      save_state(x: args[0], y: args[1], direction: args[2])
     end
   end
 
@@ -43,7 +43,7 @@ class Robot
     end
 
     if valid_coords?(new_state[:x], new_state[:y])
-      @state = new_state
+      save_state(new_state)
     end
   end
 
@@ -64,7 +64,11 @@ class Robot
   attr_accessor :state
 
   def initialize
-    @state = {}
+    save_state({})
+  end
+
+  def save_state(new_state)
+    @state = new_state
   end
 
   def exec_one_command(command_and_args)
