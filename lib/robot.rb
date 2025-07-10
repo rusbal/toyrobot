@@ -21,15 +21,15 @@ class Robot
     end
   end
 
-  def left(...)
+  def left(*)
     change_direction_90_degrees(__method__)
   end
 
-  def right(...)
+  def right(*)
     change_direction_90_degrees(__method__)
   end
 
-  def move(...)
+  def move(*)
     new_state = state.dup
 
     if north?
@@ -47,7 +47,7 @@ class Robot
     end
   end
 
-  def report(...)
+  def report(*)
     state
   end
 
@@ -56,7 +56,7 @@ class Robot
   end
 
   def placed?
-    !state.empty?
+    state.any?
   end
 
   private
