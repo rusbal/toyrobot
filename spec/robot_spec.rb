@@ -7,28 +7,28 @@ RSpec.describe Robot do
     context 'with valid placement' do
       it 'will return true' do
         robot.place(0, 0, 'NORTH')
-        expect(robot.report).to eq(x: 0, y: 0, direction: 'NORTH')
+        expect(robot.report).to eq "0,0,NORTH"
       end
     end
 
     context 'with invalid placement x' do
       it 'will return false' do
         robot.place(5, 0, 'NORTH')
-        expect(robot.report).to eq({})
+        expect(robot.report).to eq ""
       end
     end
 
     context 'with invalid placement y' do
       it 'will return false' do
         robot.place(0, 5, 'NORTH')
-        expect(robot.report).to eq({})
+        expect(robot.report).to eq ""
       end
     end
 
     context 'with invalid placement direction' do
       it 'will return false' do
         robot.place(0, 0, 'AMERICA')
-        expect(robot.report).to eq({})
+        expect(robot.report).to eq ""
       end
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe Robot do
       it 'moves one square to the right direction' do
         robot.place(0, 0, 'NORTH')
         robot.move
-        expect(robot.report).to eq(x: 0, y: 1, direction: 'NORTH')
+        expect(robot.report).to eq "0,1,NORTH"
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe Robot do
       it 'does not move' do
         robot.place(0, 0, 'SOUTH')
         robot.move
-        expect(robot.report).to eq(x: 0, y: 0, direction: 'SOUTH')
+        expect(robot.report).to eq "0,0,SOUTH"
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Robot do
       it 'does not move' do
         robot.place(0, 4, 'NORTH')
         robot.move
-        expect(robot.report).to eq(x: 0, y: 4, direction: 'NORTH')
+        expect(robot.report).to eq "0,4,NORTH"
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe Robot do
       it 'does not move' do
         robot.place(4, 0, 'EAST')
         robot.move
-        expect(robot.report).to eq(x: 4, y: 0, direction: 'EAST')
+        expect(robot.report).to eq "4,0,EAST"
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Robot do
       it 'does not move' do
         robot.place(0, 0, 'WEST')
         robot.move
-        expect(robot.report).to eq(x: 0, y: 0, direction: 'WEST')
+        expect(robot.report).to eq "0,0,WEST"
       end
     end
   end
@@ -80,7 +80,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the left' do
         robot.place(0, 0, 'NORTH')
         robot.left
-        expect(robot.report[:direction]).to eq('WEST')
+        expect(robot.report).to eq "0,0,WEST"
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the left' do
         robot.place(0, 0, 'WEST')
         robot.left
-        expect(robot.report[:direction]).to eq('SOUTH')
+        expect(robot.report).to eq "0,0,SOUTH"
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the left' do
         robot.place(0, 0, 'SOUTH')
         robot.left
-        expect(robot.report[:direction]).to eq('EAST')
+        expect(robot.report).to eq "0,0,EAST"
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the left' do
         robot.place(0, 0, 'EAST')
         robot.left
-        expect(robot.report[:direction]).to eq('NORTH')
+        expect(robot.report).to eq "0,0,NORTH"
       end
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the right' do
         robot.place(0, 0, 'NORTH')
         robot.right
-        expect(robot.report[:direction]).to eq('EAST')
+        expect(robot.report).to eq "0,0,EAST"
       end
     end
 
@@ -122,7 +122,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the right' do
         robot.place(0, 0, 'EAST')
         robot.right
-        expect(robot.report[:direction]).to eq('SOUTH')
+        expect(robot.report).to eq "0,0,SOUTH"
       end
     end
 
@@ -130,7 +130,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the right' do
         robot.place(0, 0, 'SOUTH')
         robot.right
-        expect(robot.report[:direction]).to eq('WEST')
+        expect(robot.report).to eq "0,0,WEST"
       end
     end
 
@@ -138,7 +138,7 @@ RSpec.describe Robot do
       it 'rotates 90 degrees to the right' do
         robot.place(0, 0, 'WEST')
         robot.right
-        expect(robot.report[:direction]).to eq('NORTH')
+        expect(robot.report).to eq "0,0,NORTH"
       end
     end
   end

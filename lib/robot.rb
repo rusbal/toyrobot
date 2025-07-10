@@ -1,7 +1,8 @@
+require_relative './state'
+
 class Robot
   COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
-  VALID_POINT = ->(n) { n && n >= 0 && n <= 4 }
 
   def self.call(commands)
     new.call(commands)
@@ -12,49 +13,36 @@ class Robot
       exec_one_command(command_and_args)
     end.last
 
-    formatted_report if success
+    state.formatted_report if success
   end
 
   def place(*args)
-    save_state(x: args[0], y: args[1], direction: args[2])
+    state.save(x: args[0], y: args[1], direction: args[2])
   end
 
   def left(*)
-    save_state(direction: change_direction_90_degrees(__method__))
+    state.save(direction: change_direction_90_degrees(__method__))
   end
 
   def right(*)
-    save_state(direction: change_direction_90_degrees(__method__))
+    state.save(direction: change_direction_90_degrees(__method__))
   end
 
   def move(*)
-    if north?
-      save_state(y: state[:y] + 1)
-    elsif south?
-      save_state(y: state[:y] - 1)
-    elsif east?
-      save_state(x: state[:x] + 1)
-    elsif west?
-      save_state(x: state[:x] - 1)
-    end
+    state.move
   end
 
   def report(*)
-    state
+    state.formatted_report
   end
 
   private
 
-  attr_accessor :state
-
-  def save_state(new_state)
-    @state ||= {}
-    new_state = { **@state, **new_state }
-
-    if valid?(new_state)
-      @state = new_state
-    end
+  def initialize
+    @state = State.new
   end
+
+  attr_accessor :state
 
   def exec_one_command(command_and_args)
     command, x, y, direction = command_and_args.squeeze(' ').split(/[ ,]/, 4)
@@ -63,29 +51,11 @@ class Robot
     y = y&.to_i
     direction = direction&.strip
 
-    # NO OP
+    # NOOP
     return unless COMMANDS.include?(command)
-    return if command != 'PLACE' && !placed?
+    return if command != 'PLACE' && !state.ready?
 
     send(command.downcase, x, y, direction)
-  end
-
-  def placed?
-    (state || {}).any?
-  end
-
-  def valid?(kwargs)
-    x = kwargs[:x]
-    y = kwargs[:y]
-    direction = kwargs[:direction]
-
-    return false unless x && y && direction
-
-    valid_coords?(x, y) && DIRECTIONS.include?(direction)
-  end
-
-  def valid_coords?(x, y)
-    VALID_POINT.call(x) && VALID_POINT.call(y)
   end
 
   def change_direction_90_degrees(direction)
@@ -95,7 +65,7 @@ class Robot
       change = 1
     end
 
-    index = DIRECTIONS.index(state[:direction]) + change
+    index = DIRECTIONS.index(state.direction) + change
 
     if index < 0
       index = 3
@@ -104,15 +74,5 @@ class Robot
     end
 
     DIRECTIONS[index]
-  end
-
-  def formatted_report
-    state.values.join(',')
-  end
-
-  DIRECTIONS.each do |direction|
-    define_method("#{direction.downcase}?") do
-      state[:direction] == direction
-    end
   end
 end
