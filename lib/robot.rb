@@ -51,16 +51,16 @@ class Robot
   def run(command_and_args)
     command, x, y, direction = command_and_args.split(/[ ,]/, 4)
 
-    return if unprocessable_command?(command)
+    return unless processable_command?(command)
 
     send(command.downcase, x&.to_i, y&.to_i, direction&.strip)
   end
 
-  def unprocessable_command?(command)
-    return true unless COMMANDS.include?(command)
-    return true if command != 'PLACE' && !state.ready?
+  def processable_command?(command)
+    return false unless COMMANDS.include?(command)
+    return false if command != 'PLACE' && !state.ready?
 
-    false
+    true
   end
 
   def change_direction_90_degrees(direction)
