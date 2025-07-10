@@ -12,7 +12,7 @@ class Robot
       exec_one_command(command_and_args)
     end
 
-    "#{state[:x]},#{state[:y]},#{state[:direction]}"
+    formatted_report
   end
 
   def place(*args)
@@ -49,6 +49,10 @@ class Robot
 
   def report(...)
     state
+  end
+
+  def formatted_report
+    state.values.join(',')
   end
 
   def placed?
