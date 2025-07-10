@@ -1,7 +1,7 @@
 require 'debug'
 
 class Robot
-  DIRECTIONS = ['NORTH', 'SOUTH', 'EAST', 'WEST'].freeze
+  DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
   VALID_POINT = ->(n) { n >= 0 && n <= 4 }
 
   def initialize
@@ -15,12 +15,10 @@ class Robot
   end
 
   def left
-    current_index = DIRECTIONS.index(@state[:direction])
+    index = DIRECTIONS.index(@state[:direction]) - 1
 
-    if DIRECTIONS.index(@state[:direction]).odd?
-      index = current_index - 1
-    else
-      index = current_index + 1
+    if index < 0
+      index = 3
     end
 
     @state[:direction] = DIRECTIONS[index]
