@@ -1,5 +1,6 @@
 class Robot
   DIRECTIONS = ['NORTH', 'SOUTH', 'EAST', 'WEST'].freeze
+  VALID_POINT = ->(n) { n >= 0 && n <= 4 }
 
   def initialize
     @state = {}
@@ -22,10 +23,8 @@ class Robot
   def valid?(*args)
     x, y, direction = *args
 
-    valid_point = ->(n) { n >= 0 && n <= 4 }
-
-    valid_point.call(x) &&
-      valid_point.call(y) &&
+    VALID_POINT.call(x) &&
+      VALID_POINT.call(y) &&
       DIRECTIONS.include?(direction)
   end
 end
