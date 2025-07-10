@@ -1,11 +1,20 @@
 require 'debug'
 
 class Robot
+  VALID_COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
   DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
-  VALID_POINT = ->(n) { n >= 0 && n <= 4 }
+  VALID_POINT = ->(n) { n && n >= 0 && n <= 4 }
 
-  def initialize
-    @state = {}
+  def self.call(commands)
+    new.call(commands)
+  end
+
+  def call(commands)
+    state = commands.split("\n").map do |command_and_args|
+      exec_one_command(command_and_args)
+    end.last
+
+    "#{state[:x]},#{state[:y]}, #{state[:direction]}"
   end
 
   def place(*args)
@@ -14,19 +23,15 @@ class Robot
     end
   end
 
-  def left
+  def left(...)
     change_direction_90_degrees(__method__)
   end
 
-  def right
+  def right(...)
     change_direction_90_degrees(__method__)
   end
 
-  def placed?
-    !@state.empty?
-  end
-
-  def move
+  def move(...)
     new_state = @state.dup
 
     if north?
@@ -44,16 +49,39 @@ class Robot
     end
   end
 
-  def report
+  def report(...)
     @state
+  end
+
+  def placed?
+    !@state.empty?
   end
 
   private
 
   attr_accessor :state
 
+  def initialize
+    @state = {}
+  end
+
+  def exec_one_command(command_and_args)
+    command, x, y, direction = command_and_args.squeeze(' ').split(/[ ,]/, 4)
+
+    x = x&.to_i
+    y = y&.to_i
+    direction = direction&.strip
+
+    # NO OP
+    return unless VALID_COMMANDS.include?(command)
+
+    send(command.downcase, x, y, direction)
+  end
+
   def valid?(*args)
     x, y, direction = *args
+
+    return false unless x && y && direction
 
     valid_coords?(x, y) && DIRECTIONS.include?(direction)
   end
