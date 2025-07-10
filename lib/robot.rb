@@ -24,6 +24,16 @@ class Robot
     @state[:direction] = DIRECTIONS[index]
   end
 
+  def right
+    index = DIRECTIONS.index(@state[:direction]) + 1
+
+    if index > 4
+      index = 0
+    end
+
+    @state[:direction] = DIRECTIONS[index]
+  end
+
   def placed?
     !@state.empty?
   end
