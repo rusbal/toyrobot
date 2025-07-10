@@ -15,15 +15,15 @@ class Robot
   end
 
   def left
-    if north?
-      @state[:direction] = 'SOUTH'
-    elsif south?
-      @state[:direction] = 'NORTH'
-    elsif east?
-      @state[:direction] = 'WEST'
-    elsif west?
-      @state[:direction] = 'EAST'
+    current_index = DIRECTIONS.index(@state[:direction])
+
+    if DIRECTIONS.index(@state[:direction]).odd?
+      index = current_index - 1
+    else
+      index = current_index + 1
     end
+
+    @state[:direction] = DIRECTIONS[index]
   end
 
   def placed?
