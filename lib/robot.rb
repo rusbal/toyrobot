@@ -2,7 +2,6 @@ require_relative './state'
 
 class Robot
   COMMANDS = ['PLACE', 'LEFT', 'RIGHT', 'MOVE', 'REPORT'].freeze
-  DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'].freeze
 
   def self.call(commands)
     new.call(commands)
@@ -65,7 +64,7 @@ class Robot
       change = 1
     end
 
-    index = DIRECTIONS.index(state.direction) + change
+    index = State::DIRECTIONS.index(state.direction) + change
 
     if index < 0
       index = 3
@@ -73,6 +72,6 @@ class Robot
       index = 0
     end
 
-    DIRECTIONS[index]
+    State::DIRECTIONS[index]
   end
 end
