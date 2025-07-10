@@ -8,9 +8,9 @@ class Robot
   end
 
   def call(commands)
-    state = commands.split("\n").map do |command_and_args|
+    commands.split("\n").map do |command_and_args|
       exec_one_command(command_and_args)
-    end.last
+    end
 
     "#{state[:x]},#{state[:y]},#{state[:direction]}"
   end
@@ -30,7 +30,7 @@ class Robot
   end
 
   def move(...)
-    new_state = @state.dup
+    new_state = state.dup
 
     if north?
       new_state[:y] += 1
@@ -48,11 +48,11 @@ class Robot
   end
 
   def report(...)
-    @state
+    state
   end
 
   def placed?
-    !@state.empty?
+    !state.empty?
   end
 
   private
@@ -95,7 +95,7 @@ class Robot
       change = 1
     end
 
-    index = DIRECTIONS.index(@state[:direction]) + change
+    index = DIRECTIONS.index(state[:direction]) + change
 
     if index < 0
       index = 3
@@ -103,12 +103,12 @@ class Robot
       index = 0
     end
 
-    @state[:direction] = DIRECTIONS[index]
+    state[:direction] = DIRECTIONS[index]
   end
 
   DIRECTIONS.each do |direction|
     define_method("#{direction.downcase}?") do
-      @state[:direction] == direction
+      state[:direction] == direction
     end
   end
 end
