@@ -8,11 +8,11 @@ class Robot
   end
 
   def call(commands)
-    commands.split("\n").map do |command_and_args|
+    success = commands.split("\n").map do |command_and_args|
       exec_one_command(command_and_args)
-    end
+    end.last
 
-    formatted_report
+    formatted_report if success
   end
 
   def place(*args)

@@ -12,7 +12,8 @@ begin
     input = gets&.chomp&.upcase
     break if input.nil? || input == 'QUIT' || input == 'EXIT'
 
-    puts robot.call(input)
+    result = robot.call(input)
+    puts result if result
   end
 rescue Interrupt
   puts "\nExiting..."
