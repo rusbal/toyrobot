@@ -65,16 +65,16 @@ class Robot
 
   def change_direction_90_degrees(direction)
     if direction == :left
-      change = -1
+      index_delta = -1
     elsif direction == :right
-      change = 1
+      index_delta = 1
     end
 
-    State::DIRECTIONS[compute_index(change)]
+    State::DIRECTIONS[compute_index(index_delta)]
   end
 
-  def compute_index(change)
-    index = State::DIRECTIONS.index(state.direction) + change
+  def compute_index(index_delta)
+    index = State::DIRECTIONS.index(state.direction) + index_delta
 
     if index.negative?
       3
