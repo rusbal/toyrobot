@@ -12,8 +12,8 @@ class Robot
 
   def call(commands)
     success = commands.split("\n").map do |command_and_args|
-      exec_one_command(command_and_args)
-    end.last
+      run(command_and_args)
+    end.compact.last
 
     state.formatted_report if success
   end
@@ -46,18 +46,19 @@ class Robot
 
   attr_accessor :state
 
-  def exec_one_command(command_and_args)
+  def run(command_and_args)
     command, x, y, direction = command_and_args.squeeze(' ').split(/[ ,]/, 4)
 
-    x = x&.to_i
-    y = y&.to_i
-    direction = direction&.strip
+    return if unprocessable_command?(command)
 
-    # NOOP
-    return unless COMMANDS.include?(command)
-    return if command != 'PLACE' && !state.ready?
+    send(command.downcase, x&.to_i, y&.to_i, direction&.strip)
+  end
 
-    send(command.downcase, x, y, direction)
+  def unprocessable_command?(command)
+    return true unless COMMANDS.include?(command)
+    return true if command != 'PLACE' && !state.ready?
+
+    false
   end
 
   def change_direction_90_degrees(direction)
