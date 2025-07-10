@@ -50,7 +50,36 @@ RSpec.describe Robot do
       end
     end
 
-    context 'invalid' do
+    context 'invalid using with south' do
+      it 'does not move' do
+        robot.place(0, 0, 'SOUTH')
+        robot.move
+        expect(robot.report).to eq(x: 0, y: 0, direction: 'SOUTH')
+      end
+    end
+
+    context 'invalid using with north' do
+      it 'does not move' do
+        robot.place(0, 4, 'NORTH')
+        robot.move
+        expect(robot.report).to eq(x: 0, y: 4, direction: 'NORTH')
+      end
+    end
+
+    context 'invalid using with east' do
+      it 'does not move' do
+        robot.place(4, 0, 'EAST')
+        robot.move
+        expect(robot.report).to eq(x: 4, y: 0, direction: 'EAST')
+      end
+    end
+
+    context 'invalid using with west' do
+      it 'does not move' do
+        robot.place(0, 0, 'WEST')
+        robot.move
+        expect(robot.report).to eq(x: 0, y: 0, direction: 'WEST')
+      end
     end
   end
 end
