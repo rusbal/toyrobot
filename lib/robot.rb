@@ -28,19 +28,15 @@ class Robot
   end
 
   def move(*)
-    new_state = state.dup
-
     if north?
-      new_state[:y] += 1
+      save_state(y: state[:y] + 1)
     elsif south?
-      new_state[:y] -= 1
+      save_state(y: state[:y] - 1)
     elsif east?
-      new_state[:x] += 1
+      save_state(x: state[:x] + 1)
     elsif west?
-      new_state[:x] -= 1
+      save_state(x: state[:x] - 1)
     end
-
-    save_state(new_state)
   end
 
   def report(*)
