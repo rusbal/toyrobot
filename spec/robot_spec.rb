@@ -181,8 +181,18 @@ RSpec.describe Robot do
     end
 
     describe 'third test' do
+      let(:commands) { <<~COMMANDS
+          PLACE 1,2,EAST
+          MOVE
+          MOVE
+          LEFT
+          MOVE
+          REPORT
+        COMMANDS
+      }
+
       it 'returns expected string' do
-        expect(subject).to eq "0,1, NORTH"
+        expect(subject).to eq "3,3,NORTH"
       end
     end
   end
