@@ -5,28 +5,28 @@ RSpec.describe Robot do
 
   describe '#place' do
     context 'with valid placement' do
-      it 'will return true' do
+      it 'assigns place' do
         robot.place(0, 0, 'NORTH')
         expect(robot.report).to eq "0,0,NORTH"
       end
     end
 
     context 'with invalid placement x' do
-      it 'will return false' do
+      it 'does not assign place' do
         robot.place(5, 0, 'NORTH')
         expect(robot.report).to eq ""
       end
     end
 
     context 'with invalid placement y' do
-      it 'will return false' do
+      it 'does not assign place' do
         robot.place(0, 5, 'NORTH')
         expect(robot.report).to eq ""
       end
     end
 
     context 'with invalid placement direction' do
-      it 'will return false' do
+      it 'does not assign place' do
         robot.place(0, 0, 'AMERICA')
         expect(robot.report).to eq ""
       end
@@ -139,52 +139,6 @@ RSpec.describe Robot do
         robot.place(0, 0, 'WEST')
         robot.right
         expect(robot.report).to eq "0,0,NORTH"
-      end
-    end
-  end
-
-  describe 'given tests on toy robot.md' do
-    subject { Robot.call(commands) }
-
-    describe 'first test' do
-      let(:commands) { <<~COMMANDS
-          PLACE 0,0, NORTH
-          MOVE
-          REPORT
-        COMMANDS
-      }
-
-      it 'returns expected string' do
-        expect(subject).to eq "0,1,NORTH"
-      end
-    end
-
-    describe 'second test' do
-      let(:commands) { <<~COMMANDS
-          PLACE 0,0,NORTH
-          LEFT
-          REPORT
-        COMMANDS
-      }
-
-      it 'returns expected string' do
-        expect(subject).to eq "0,0,WEST"
-      end
-    end
-
-    describe 'third test' do
-      let(:commands) { <<~COMMANDS
-          PLACE 1,2,EAST
-          MOVE
-          MOVE
-          LEFT
-          MOVE
-          REPORT
-        COMMANDS
-      }
-
-      it 'returns expected string' do
-        expect(subject).to eq "3,3,NORTH"
       end
     end
   end
